@@ -1,4 +1,4 @@
-package org.ucb.appp1.profile.domain.model
+package org.ucb.appp1.userinformation.domain.model
 
 data class UserInfoModel(
     val email: String,

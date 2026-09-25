@@ -3,18 +3,24 @@ package org.ucb.appp1.feature.movielist.data.repository
 import org.ucb.appp1.feature.movielist.domain.model.Movie
 import org.ucb.appp1.feature.movielist.domain.repository.MovieRepository
 
-/**
- * Implementación TEMPORAL sin backend real. Es un `class` normal (no
- * `object`) registrado como `single` en Koin (DataModule), así que
- * sigue habiendo una sola instancia/lista compartida para toda la app
- * — MovieListScreen y MovieDetailScreen verán los mismos datos.
- */
 class MovieRepositoryImpl : MovieRepository {
 
     private val movies = mutableListOf(
-        Movie("1", "The Matrix", "", listOf("Ciencia Ficción", "Acción"), 4.8, false),
-        Movie("2", "Spider-Man", "", listOf("Acción", "Aventura"), 4.5, false),
-        Movie("3", "Interstellar", "", listOf("Ciencia Ficción", "Drama"), 4.9, true)
+        Movie(
+            id = "1", title = "The Matrix", posterUrl = "",
+            genres = listOf("Ciencia Ficción", "Acción"), rating = 4.8, isFavorite = false,
+            synopsis = "Un programador descubre que la realidad es una simulación controlada por máquinas."
+        ),
+        Movie(
+            id = "2", title = "Spider-Man", posterUrl = "",
+            genres = listOf("Acción", "Aventura"), rating = 4.5, isFavorite = false,
+            synopsis = "Un joven adquiere poderes arácnidos y debe aprender a usarlos con responsabilidad."
+        ),
+        Movie(
+            id = "3", title = "Interstellar", posterUrl = "",
+            genres = listOf("Ciencia Ficción", "Drama"), rating = 4.9, isFavorite = true,
+            synopsis = "Un grupo de astronautas viaja por un agujero de gusano buscando un nuevo hogar para la humanidad."
+        )
     )
 
     override suspend fun getMovies(query: String): List<Movie> =
@@ -22,6 +28,9 @@ class MovieRepositoryImpl : MovieRepository {
 
     override suspend fun getMovieById(movieId: String): Movie? =
         movies.find { it.id == movieId }
+
+    override suspend fun getFavoriteMovies(): List<Movie> =
+        movies.filter { it.isFavorite }
 
     override suspend fun toggleFavorite(movieId: String) {
         val index = movies.indexOfFirst { it.id == movieId }

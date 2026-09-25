@@ -33,6 +33,7 @@ import org.ucb.appp1.feature.movielist.domain.model.Movie
 @Composable
 fun MovieListScreen(
     onNavigateToDetail: (String) -> Unit,
+    onNavigateToProfile: () -> Unit,
     viewModel: MovieListViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -49,7 +50,14 @@ fun MovieListScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = { TopAppBar(title = { Text("Películas Populares") }) }
+        topBar = {
+            TopAppBar(
+                title = { Text("Películas Populares") },
+                actions = {
+                    TextButton(onClick = onNavigateToProfile) { Text("Perfil") }
+                }
+            )
+        }
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
             OutlinedTextField(
