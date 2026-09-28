@@ -19,9 +19,8 @@ import org.ucb.appp1.userinformation.presentation.screen.UserInformationScreen
 fun AppNavHost() {
     val navController = rememberNavController()
 
-    // TEMPORAL: para probar el catalogo. Despues vuelve a NavRoute.Login
-    NavHost(navController = navController, startDestination = NavRoute.Login) {
-    //NavHost(navController = navController, startDestination = NavRoute.Catalog) {
+    //NavHost(navController = navController, startDestination = NavRoute.Login) {
+    NavHost(navController = navController, startDestination = NavRoute.Catalog) {
 
         composable<NavRoute.Catalog> {
             CatalogScreen()
