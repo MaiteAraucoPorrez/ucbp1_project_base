@@ -10,6 +10,7 @@ import org.ucb.appp1.feature.userstate.presentation.viewmodel.UserStateEditViewM
 import org.ucb.appp1.feature.userstate.presentation.viewmodel.UserStateViewModel
 import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationViewModel
 import org.ucb.appp1.feature.catalog.presentation.viewmodel.CatalogViewModel
+import org.ucb.appp1.feature.crossref.presentation.viewmodel.CrossrefViewModel
 
 val presentationModule = module {
     viewModelOf(::LoginViewModel)
@@ -20,4 +21,5 @@ val presentationModule = module {
     viewModelOf(::UserStateEditViewModel)
     viewModelOf(::UserInformationViewModel)
     viewModelOf(::CatalogViewModel)
+    viewModelOf(::CrossrefViewModel)
 }

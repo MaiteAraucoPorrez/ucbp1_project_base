@@ -9,6 +9,10 @@ import org.ucb.appp1.feature.catalog.data.datasource.CatalogRemoteDataSource
 import org.ucb.appp1.feature.catalog.data.repository.CatalogRepositoryImpl
 import org.ucb.appp1.feature.catalog.data.service.CatalogService
 import org.ucb.appp1.feature.catalog.domain.repository.CatalogRepository
+import org.ucb.appp1.feature.crossref.data.datasource.CrossrefRemoteDataSource
+import org.ucb.appp1.feature.crossref.data.repository.CrossrefRepositoryImpl
+import org.ucb.appp1.feature.crossref.data.service.CrossrefService
+import org.ucb.appp1.feature.crossref.domain.repository.CrossrefRepository
 import org.ucb.appp1.core.data.ProfileRepositoryImpl
 import org.ucb.appp1.core.data.SessionRepositoryImpl
 import org.ucb.appp1.core.domain.repository.ProfileRepository
@@ -33,7 +37,6 @@ val dataModule = module {
     single<GithubRemoteDataSource> { GitHubApiService() }
     single<GithubRepository> { GithubRepositoryImpl(get()) }
 
-    // --- Catalog (TMDB) ---
     single {
         HttpClient {
             install(ContentNegotiation) {
@@ -41,6 +44,12 @@ val dataModule = module {
             }
         }
     }
+
+    // --- Catalog (TMDB) ---
     single<CatalogRemoteDataSource> { CatalogService(get()) }
     single<CatalogRepository> { CatalogRepositoryImpl(get()) }
+
+    // --- Crossref ---
+    single<CrossrefRemoteDataSource> { CrossrefService(get()) }
+    single<CrossrefRepository> { CrossrefRepositoryImpl(get()) }
 }
