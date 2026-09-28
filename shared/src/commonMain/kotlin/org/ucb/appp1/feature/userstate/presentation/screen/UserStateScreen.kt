@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.userstate.presentation
+package org.ucb.appp1.feature.userstate.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.viewmodel.koinViewModel
+import org.ucb.appp1.feature.userstate.presentation.viewmodel.UserStateEffect
+import org.ucb.appp1.feature.userstate.presentation.viewmodel.UserStateIntent
+import org.ucb.appp1.feature.userstate.presentation.viewmodel.UserStateViewModel
 
 /**
  * VIEW del diagrama de Perfil (MVI): emite UserStateIntent y solo lee UserStateState.
@@ -36,20 +40,39 @@ import org.koin.compose.viewmodel.koinViewModel
 fun UserStateScreen(
     onNavigateToLogin: () -> Unit,
     onNavigateToUserSearch: () -> Unit,
+    onNavigateToEditProfile: () -> Unit,
     viewModel: UserStateViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    // Se recarga cada vez que se vuelve a esta pantalla (ej. al regresar
+    // de "Editar Perfil"), para reflejar cambios recientes.
+    LaunchedEffect(Unit) {
+        viewModel.onIntent(UserStateIntent.LoadProfile)
+    }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 UserStateEffect.NavigateToLogin -> onNavigateToLogin()
                 UserStateEffect.NavigateToUserSearch -> onNavigateToUserSearch()
+                UserStateEffect.NavigateToEditProfile -> onNavigateToEditProfile()
             }
         }
     }
 
-    Scaffold(topBar = { TopAppBar(title = { Text("Mi Perfil") }) }) { padding ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Mi Perfil") },
+                actions = {
+                    TextButton(onClick = { viewModel.onIntent(UserStateIntent.OnEditProfileClicked) }) {
+                        Text("Editar")
+                    }
+                }
+            )
+        }
+    ) { padding ->
         if (state.isLoading) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()

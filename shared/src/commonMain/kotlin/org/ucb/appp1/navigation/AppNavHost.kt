@@ -5,18 +5,27 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import org.ucb.appp1.feature.login.presentation.LoginScreen
-import org.ucb.appp1.feature.moviedetail.presentation.MovieDetailScreen
-import org.ucb.appp1.feature.movielist.presentation.MovieListScreen
-import org.ucb.appp1.feature.signup.presentation.RegisterScreen
-import org.ucb.appp1.feature.userstate.presentation.UserStateScreen
-import org.ucb.appp1.userinformation.presentation.UserInformationScreen
+import org.ucb.appp1.feature.catalog.presentation.screen.CatalogScreen
+import org.ucb.appp1.feature.login.presentation.screen.LoginScreen
+import org.ucb.appp1.feature.moviedetail.presentation.screen.MovieDetailScreen
+import org.ucb.appp1.feature.movielist.domain.vo.MovieId
+import org.ucb.appp1.feature.movielist.presentation.screen.MovieListScreen
+import org.ucb.appp1.feature.signup.presentation.screen.RegisterScreen
+import org.ucb.appp1.feature.userstate.presentation.screen.UserStateEditScreen
+import org.ucb.appp1.feature.userstate.presentation.screen.UserStateScreen
+import org.ucb.appp1.userinformation.presentation.screen.UserInformationScreen
 
 @Composable
 fun AppNavHost() {
     val navController = rememberNavController()
 
+    // TEMPORAL: para probar el catalogo. Despues vuelve a NavRoute.Login
     NavHost(navController = navController, startDestination = NavRoute.Login) {
+    //NavHost(navController = navController, startDestination = NavRoute.Catalog) {
+
+        composable<NavRoute.Catalog> {
+            CatalogScreen()
+        }
 
         composable<NavRoute.Login> {
             LoginScreen(
@@ -42,7 +51,7 @@ fun AppNavHost() {
 
         composable<NavRoute.MovieList> {
             MovieListScreen(
-                onNavigateToDetail = { movieId -> navController.navigate(NavRoute.MovieDetail(movieId)) },
+                onNavigateToDetail = { movieId -> navController.navigate(NavRoute.MovieDetail(movieId.value)) },
                 onNavigateToProfile = { navController.navigate(NavRoute.Profile) }
             )
         }
@@ -50,7 +59,7 @@ fun AppNavHost() {
         composable<NavRoute.MovieDetail> { backStackEntry ->
             val route = backStackEntry.toRoute<NavRoute.MovieDetail>()
             MovieDetailScreen(
-                movieId = route.movieId,
+                movieId = MovieId(route.movieId),
                 onNavigateBack = { navController.popBackStack() }
             )
         }
@@ -62,8 +71,13 @@ fun AppNavHost() {
                         popUpTo(0) { inclusive = true }
                     }
                 },
-                onNavigateToUserSearch = { navController.navigate(NavRoute.UserSearch) }
+                onNavigateToUserSearch = { navController.navigate(NavRoute.UserSearch) },
+                onNavigateToEditProfile = { navController.navigate(NavRoute.ProfileEdit) }
             )
+        }
+
+        composable<NavRoute.ProfileEdit> {
+            UserStateEditScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable<NavRoute.UserSearch> {

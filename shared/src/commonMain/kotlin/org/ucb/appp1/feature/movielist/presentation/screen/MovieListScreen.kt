@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.movielist.presentation
+package org.ucb.appp1.feature.movielist.presentation.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,10 +29,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.viewmodel.koinViewModel
 import org.ucb.appp1.feature.movielist.domain.model.Movie
+import org.ucb.appp1.feature.movielist.domain.vo.MovieId
+import org.ucb.appp1.feature.movielist.presentation.viewmodel.MovieListEffect
+import org.ucb.appp1.feature.movielist.presentation.viewmodel.MovieListIntent
+import org.ucb.appp1.feature.movielist.presentation.viewmodel.MovieListViewModel
 
 @Composable
 fun MovieListScreen(
-    onNavigateToDetail: (String) -> Unit,
+    onNavigateToDetail: (MovieId) -> Unit,
     onNavigateToProfile: () -> Unit,
     viewModel: MovieListViewModel = koinViewModel()
 ) {
@@ -82,7 +86,7 @@ fun MovieListScreen(
                 }
 
                 else -> LazyColumn {
-                    items(state.movies, key = { it.id }) { movie ->
+                    items(state.movies, key = { it.id.value }) { movie ->
                         MovieRow(
                             movie = movie,
                             onClick = { viewModel.onIntent(MovieListIntent.OnMovieClicked(movie.id)) },

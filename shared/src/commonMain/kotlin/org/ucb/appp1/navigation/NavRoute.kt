@@ -1,6 +1,7 @@
 package org.ucb.appp1.navigation
 
 import kotlinx.serialization.Serializable
+import org.ucb.appp1.feature.movielist.domain.vo.MovieId
 
 /**
  * Rutas de navegación tipadas (Navigation Compose Multiplatform).
@@ -25,5 +26,11 @@ sealed class NavRoute {
     data object Profile : NavRoute()
 
     @Serializable
+    data object ProfileEdit : NavRoute()
+
+    @Serializable
     data object UserSearch : NavRoute()
+
+    @Serializable
+    data object Catalog : NavRoute()
 }

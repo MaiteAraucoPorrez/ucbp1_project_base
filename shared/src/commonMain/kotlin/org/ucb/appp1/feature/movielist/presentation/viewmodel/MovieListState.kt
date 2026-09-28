@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.movielist.presentation
+package org.ucb.appp1.feature.movielist.presentation.viewmodel
 
 import org.ucb.appp1.feature.movielist.domain.model.Movie
 

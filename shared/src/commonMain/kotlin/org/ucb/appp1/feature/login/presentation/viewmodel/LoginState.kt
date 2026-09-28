@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.login.presentation
+package org.ucb.appp1.feature.login.presentation.viewmodel
 
 data class LoginState(
     val email: String = "",

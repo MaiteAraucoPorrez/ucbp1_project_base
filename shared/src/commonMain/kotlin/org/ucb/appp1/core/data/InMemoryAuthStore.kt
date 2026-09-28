@@ -5,11 +5,8 @@ import org.ucb.appp1.core.domain.vo.Email
 
 /**
  * Almacén en memoria TEMPORAL mientras no haya backend real.
- * Es un `object` (singleton de Kotlin), por eso Login y SignUp pueden
- * compartir el mismo "usuario registrado" sin necesidad de que Koin
- * los conecte explícitamente.
- * Cuando tengan backend, esto se reemplaza por un Ktor + API real,
- * y las interfaces AuthRepository/RegisterRepository no cambian.
+ * Es un `object` (singleton de Kotlin), por eso Login, SignUp y ahora
+ * la edición de Perfil comparten el mismo usuario sin depender de Koin.
  */
 object InMemoryAuthStore {
     private data class Credentials(val user: UserModel, val password: String)
@@ -38,5 +35,13 @@ object InMemoryAuthStore {
         } else {
             Result.failure(IllegalArgumentException("Usuario o contraseña incorrectos"))
         }
+    }
+
+    fun updateFullName(email: Email, fullName: String): Result<UserModel> {
+        val credentials = usersByEmail[email.value]
+            ?: return Result.failure(IllegalStateException("No existe una cuenta con ese correo"))
+        val updatedUser = credentials.user.copy(fullName = fullName)
+        usersByEmail[email.value] = credentials.copy(user = updatedUser)
+        return Result.success(updatedUser)
     }
 }

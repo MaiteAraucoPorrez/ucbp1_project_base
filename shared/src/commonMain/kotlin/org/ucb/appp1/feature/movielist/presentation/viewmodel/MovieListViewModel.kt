@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.movielist.presentation
+package org.ucb.appp1.feature.movielist.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.ucb.appp1.feature.movielist.domain.usecase.GetMoviesUseCase
 import org.ucb.appp1.feature.movielist.domain.usecase.ToggleFavoriteUseCase
+import org.ucb.appp1.feature.movielist.domain.vo.MovieId
 
 class MovieListViewModel(
     private val getMovies: GetMoviesUseCase,
@@ -58,7 +59,7 @@ class MovieListViewModel(
         }
     }
 
-    private fun onFavoriteToggled(movieId: String) {
+    private fun onFavoriteToggled(movieId: MovieId) {
         viewModelScope.launch {
             toggleFavorite(movieId)
             loadMovies(_state.value.searchQuery)

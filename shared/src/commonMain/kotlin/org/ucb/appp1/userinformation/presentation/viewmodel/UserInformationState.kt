@@ -1,4 +1,4 @@
-package org.ucb.appp1.userinformation.presentation
+package org.ucb.appp1.userinformation.presentation.viewmodel
 
 import org.ucb.appp1.userinformation.domain.model.UserInfoModel
 

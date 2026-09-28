@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.signup.presentation
+package org.ucb.appp1.feature.signup.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,12 +22,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
+import org.ucb.appp1.feature.signup.presentation.viewmodel.RegisterViewModel
 
-/**
- * VIEW del diagrama de Registro (MVVM): se "Binda" al State y llama
- * funciones del ViewModel directamente (Registrarse(), etc.), sin
- * pasar por un Intent como en Login/MVI.
- */
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
@@ -36,7 +32,6 @@ fun RegisterScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    // MVVM sin Effect separado: navegamos observando el flag del State.
     LaunchedEffect(state.isRegistered) {
         if (state.isRegistered) onRegisterSuccess()
     }

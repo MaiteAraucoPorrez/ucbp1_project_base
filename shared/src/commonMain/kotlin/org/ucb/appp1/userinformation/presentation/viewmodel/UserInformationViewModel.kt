@@ -1,4 +1,4 @@
-package org.ucb.appp1.userinformation.presentation
+package org.ucb.appp1.userinformation.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

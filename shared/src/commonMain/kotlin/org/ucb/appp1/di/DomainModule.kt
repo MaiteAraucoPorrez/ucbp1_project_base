@@ -10,6 +10,7 @@ import org.ucb.appp1.feature.signup.domain.usecase.RegisterUseCase
 import org.ucb.appp1.feature.userstate.domain.usecase.GetCurrentUserUseCase
 import org.ucb.appp1.feature.userstate.domain.usecase.GetFavoriteMoviesUseCase
 import org.ucb.appp1.feature.userstate.domain.usecase.LogoutUseCase
+import org.ucb.appp1.feature.userstate.domain.usecase.UpdateProfileUseCase
 
 val domainModule = module {
     singleOf(::LoginUseCase)
@@ -20,4 +21,5 @@ val domainModule = module {
     singleOf(::GetCurrentUserUseCase)
     singleOf(::GetFavoriteMoviesUseCase)
     singleOf(::LogoutUseCase)
+    singleOf(::UpdateProfileUseCase)
 }

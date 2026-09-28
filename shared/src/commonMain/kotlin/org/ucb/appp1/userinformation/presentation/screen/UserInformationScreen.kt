@@ -1,4 +1,4 @@
-package org.ucb.appp1.userinformation.presentation
+package org.ucb.appp1.userinformation.presentation.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
+import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationUiState
+import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationViewModel
 
 /**
  * Feature "UserInformation" (búsqueda de usuarios de GitHub, ktor_kmp.pdf).
- * Antes vivía mal ubicado dentro del paquete `profile`; ahora usa el
- * mismo nombre de paquete que el PDF: org.ucb.appp1.userinformation.
  */
 @Composable
 fun UserInformationScreen(

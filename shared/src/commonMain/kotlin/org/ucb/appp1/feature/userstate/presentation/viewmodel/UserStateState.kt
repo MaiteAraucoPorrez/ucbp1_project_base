@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.userstate.presentation
+package org.ucb.appp1.feature.userstate.presentation.viewmodel
 
 import org.ucb.appp1.core.domain.model.UserModel
 import org.ucb.appp1.feature.movielist.domain.model.Movie

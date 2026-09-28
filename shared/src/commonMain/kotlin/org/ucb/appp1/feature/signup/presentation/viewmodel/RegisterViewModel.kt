@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.signup.presentation
+package org.ucb.appp1.feature.signup.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +16,6 @@ class RegisterViewModel(
     private val _state = MutableStateFlow(RegisterState())
     val state: StateFlow<RegisterState> = _state.asStateFlow()
 
-    // Funciones directas (Binds/Function del diagrama MVVM), no Intents.
     fun onFullNameChanged(value: String) = _state.update { it.copy(fullName = value, errorMessage = null) }
     fun onEmailChanged(value: String) = _state.update { it.copy(email = value, errorMessage = null) }
     fun onPasswordChanged(value: String) = _state.update { it.copy(password = value, errorMessage = null) }

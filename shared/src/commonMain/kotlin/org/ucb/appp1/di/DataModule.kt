@@ -1,7 +1,17 @@
 package org.ucb.appp1.di
 
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.dsl.module
+import org.ucb.appp1.feature.catalog.data.datasource.CatalogRemoteDataSource
+import org.ucb.appp1.feature.catalog.data.repository.CatalogRepositoryImpl
+import org.ucb.appp1.feature.catalog.data.service.CatalogService
+import org.ucb.appp1.feature.catalog.domain.repository.CatalogRepository
+import org.ucb.appp1.core.data.ProfileRepositoryImpl
 import org.ucb.appp1.core.data.SessionRepositoryImpl
+import org.ucb.appp1.core.domain.repository.ProfileRepository
 import org.ucb.appp1.core.domain.repository.SessionRepository
 import org.ucb.appp1.feature.login.data.repository.AuthRepositoryImpl
 import org.ucb.appp1.feature.login.domain.repository.AuthRepository
@@ -19,6 +29,18 @@ val dataModule = module {
     single<RegisterRepository> { RegisterRepositoryImpl() }
     single<MovieRepository> { MovieRepositoryImpl() }
     single<SessionRepository> { SessionRepositoryImpl() }
+    single<ProfileRepository> { ProfileRepositoryImpl() }
     single<GithubRemoteDataSource> { GitHubApiService() }
     single<GithubRepository> { GithubRepositoryImpl(get()) }
+
+    // --- Catalog (TMDB) ---
+    single {
+        HttpClient {
+            install(ContentNegotiation) {
+                json(Json { ignoreUnknownKeys = true; isLenient = true })
+            }
+        }
+    }
+    single<CatalogRemoteDataSource> { CatalogService(get()) }
+    single<CatalogRepository> { CatalogRepositoryImpl(get()) }
 }

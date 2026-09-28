@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.login.presentation
+package org.ucb.appp1.feature.login.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,13 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.viewmodel.koinViewModel
+import org.ucb.appp1.feature.login.presentation.viewmodel.LoginEffect
+import org.ucb.appp1.feature.login.presentation.viewmodel.LoginIntent
+import org.ucb.appp1.feature.login.presentation.viewmodel.LoginViewModel
 
-/**
- * VIEW del diagrama de Login (MVI). Solo lee LoginState y emite LoginIntent.
- * El ViewModel ahora se obtiene de Koin (koinViewModel()) en vez de
- * armarlo a mano: Koin ya sabe cómo construir LoginViewModel porque
- * está registrado en PresentationModule + DomainModule + DataModule.
- */
 @Composable
 fun LoginScreen(
     onNavigateToHome: () -> Unit,

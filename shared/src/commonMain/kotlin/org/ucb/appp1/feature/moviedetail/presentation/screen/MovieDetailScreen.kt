@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.moviedetail.presentation
+package org.ucb.appp1.feature.moviedetail.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
+import org.ucb.appp1.feature.movielist.domain.vo.MovieId
+import org.ucb.appp1.feature.moviedetail.presentation.viewmodel.MovieDetailViewModel
 
 /**
  * VIEW del diagrama de Movie Detail (MVVM): llama funciones del
@@ -34,7 +36,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MovieDetailScreen(
-    movieId: String,
+    movieId: MovieId,
     onNavigateBack: () -> Unit,
     viewModel: MovieDetailViewModel = koinViewModel()
 ) {

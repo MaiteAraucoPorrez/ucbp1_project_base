@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.moviedetail.presentation
+package org.ucb.appp1.feature.moviedetail.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.ucb.appp1.feature.moviedetail.domain.usecase.GetMovieDetailUseCase
 import org.ucb.appp1.feature.movielist.domain.usecase.ToggleFavoriteUseCase
+import org.ucb.appp1.feature.movielist.domain.vo.MovieId
 
 class MovieDetailViewModel(
     private val getMovieDetail: GetMovieDetailUseCase,
@@ -18,7 +19,7 @@ class MovieDetailViewModel(
     private val _state = MutableStateFlow(MovieDetailState())
     val state: StateFlow<MovieDetailState> = _state.asStateFlow()
 
-    fun loadMovie(movieId: String) {
+    fun loadMovie(movieId: MovieId) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, errorMessage = null) }
             val movie = getMovieDetail(movieId)

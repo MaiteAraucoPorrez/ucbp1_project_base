@@ -1,4 +1,4 @@
-package org.ucb.appp1.feature.userstate.presentation
+package org.ucb.appp1.feature.userstate.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,6 +37,7 @@ class UserStateViewModel(
             UserStateIntent.LoadProfile -> loadProfile()
             UserStateIntent.OnLogoutClicked -> onLogoutClicked()
             UserStateIntent.OnSearchGithubClicked -> sendEffect(UserStateEffect.NavigateToUserSearch)
+            UserStateIntent.OnEditProfileClicked -> sendEffect(UserStateEffect.NavigateToEditProfile)
         }
     }
 
