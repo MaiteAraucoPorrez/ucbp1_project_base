@@ -3,6 +3,7 @@ package org.ucb.appp1.di
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import org.ucb.appp1.feature.catalog.domain.usecase.GetCatalogUseCase
+import org.ucb.appp1.feature.crossref.domain.usecase.GetCrossrefUseCase
 import org.ucb.appp1.feature.login.domain.usecase.LoginUseCase
 import org.ucb.appp1.feature.moviedetail.domain.usecase.GetMovieDetailUseCase
 import org.ucb.appp1.feature.movielist.domain.usecase.GetMoviesUseCase
@@ -24,4 +25,5 @@ val domainModule = module {
     singleOf(::LogoutUseCase)
     singleOf(::UpdateProfileUseCase)
     singleOf(::GetCatalogUseCase)
+    singleOf(::GetCrossrefUseCase)
 }
