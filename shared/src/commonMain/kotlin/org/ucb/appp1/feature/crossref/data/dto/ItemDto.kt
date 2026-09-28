@@ -26,5 +26,5 @@ data class AuthorDto(
 @Serializable
 data class PublishedDto(
     @SerialName("date-parts")
-    val dateParts: List<List<Int>>? = null
+    val dateParts: List<List<Int?>>? = null
 )
