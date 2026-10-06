@@ -27,6 +27,12 @@ import org.ucb.appp1.userinformation.data.datasource.GithubRemoteDataSource
 import org.ucb.appp1.userinformation.data.repository.GithubRepositoryImpl
 import org.ucb.appp1.userinformation.data.service.GitHubApiService
 import org.ucb.appp1.userinformation.domain.repository.GithubRepository
+import org.koin.core.module.dsl.singleOf
+import org.ucb.appp1.config.AppDatabase
+import org.ucb.appp1.exchangerate.data.dao.ExchangeRateDao
+import org.ucb.appp1.exchangerate.data.datasource.ExchangeRateLocalDataSource
+import org.ucb.appp1.exchangerate.data.repository.ExchangeRateRepositoryImpl
+import org.ucb.appp1.exchangerate.domain.repository.ExchangeRateRepository
 
 val dataModule = module {
     single<AuthRepository> { AuthRepositoryImpl() }
@@ -52,4 +58,8 @@ val dataModule = module {
     // --- Crossref ---
     single<CrossrefRemoteDataSource> { CrossrefService(get()) }
     single<CrossrefRepository> { CrossrefRepositoryImpl(get()) }
+
+    single<ExchangeRateDao> { get<AppDatabase>().getDao() }
+    singleOf(::ExchangeRateLocalDataSource)
+    single<ExchangeRateRepository> { ExchangeRateRepositoryImpl(get()) }
 }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.ucb.appp1.feature.catalog.presentation.screen.CatalogScreen
+import org.ucb.appp1.feature.crossref.presentation.screen.CrossrefScreen
 import org.ucb.appp1.feature.login.presentation.screen.LoginScreen
 import org.ucb.appp1.feature.moviedetail.presentation.screen.MovieDetailScreen
 import org.ucb.appp1.feature.movielist.domain.vo.MovieId
@@ -20,10 +21,15 @@ fun AppNavHost() {
     val navController = rememberNavController()
 
     //NavHost(navController = navController, startDestination = NavRoute.Login) {
-    NavHost(navController = navController, startDestination = NavRoute.Catalog) {
+    //NavHost(navController = navController, startDestination = NavRoute.Catalog) {
+    NavHost(navController = navController, startDestination = NavRoute.Crossref) {
 
         composable<NavRoute.Catalog> {
             CatalogScreen()
+        }
+
+        composable<NavRoute.Crossref> {
+            CrossrefScreen()
         }
 
         composable<NavRoute.Login> {
