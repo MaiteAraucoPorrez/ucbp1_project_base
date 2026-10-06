@@ -33,6 +33,9 @@ import org.ucb.appp1.exchangerate.data.dao.ExchangeRateDao
 import org.ucb.appp1.exchangerate.data.datasource.ExchangeRateLocalDataSource
 import org.ucb.appp1.exchangerate.data.repository.ExchangeRateRepositoryImpl
 import org.ucb.appp1.exchangerate.domain.repository.ExchangeRateRepository
+import org.ucb.appp1.exchange.data.datasource.RealTimeDataBase
+import org.ucb.appp1.exchange.data.repository.ExchangeRepositoryImpl
+import org.ucb.appp1.exchange.domain.repository.ExchangeRepository
 
 val dataModule = module {
     single<AuthRepository> { AuthRepositoryImpl() }
@@ -62,4 +65,7 @@ val dataModule = module {
     single<ExchangeRateDao> { get<AppDatabase>().getDao() }
     singleOf(::ExchangeRateLocalDataSource)
     single<ExchangeRateRepository> { ExchangeRateRepositoryImpl(get()) }
+
+    singleOf(::RealTimeDataBase)
+    single<ExchangeRepository> { ExchangeRepositoryImpl(get()) }
 }
