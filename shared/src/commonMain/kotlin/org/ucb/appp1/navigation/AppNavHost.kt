@@ -12,6 +12,7 @@ import org.ucb.appp1.feature.login.presentation.screen.LoginScreen
 import org.ucb.appp1.feature.moviedetail.presentation.screen.MovieDetailScreen
 import org.ucb.appp1.feature.movielist.domain.vo.MovieId
 import org.ucb.appp1.feature.movielist.presentation.screen.MovieListScreen
+import org.ucb.appp1.feature.pushnotifications.presentation.screen.PushScreen
 import org.ucb.appp1.feature.remoteconfig.presentation.screen.RemoteConfigScreen
 import org.ucb.appp1.feature.signup.presentation.screen.RegisterScreen
 import org.ucb.appp1.feature.userstate.presentation.screen.UserStateEditScreen
@@ -40,6 +41,10 @@ fun AppNavHost() {
 
         composable<NavRoute.Announcements> {
             AnnouncementsScreen()
+        }
+
+        composable<NavRoute.PushNotifications> {
+            PushScreen()
         }
 
         composable<NavRoute.Login> {

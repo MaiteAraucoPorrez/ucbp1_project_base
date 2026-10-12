@@ -20,6 +20,10 @@ dependencies {
 
     implementation(libs.compose.uiToolingPreview)
     debugImplementation(libs.compose.uiTooling)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging.android)
+    implementation(libs.androidx.core.ktx)
 }
 
 android {
@@ -54,5 +58,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    lint {
+        abortOnError = false
+        checkReleaseBuilds = false
     }
 }

@@ -78,6 +78,7 @@ kotlin {
             implementation(libs.firebase.database)
             implementation(libs.firebase.config)
             implementation(libs.firebase.firestore)
+            implementation(libs.firebase.messaging)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
