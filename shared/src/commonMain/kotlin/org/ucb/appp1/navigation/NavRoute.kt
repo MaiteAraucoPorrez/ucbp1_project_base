@@ -31,4 +31,7 @@ sealed class NavRoute {
 
     @Serializable
     data object Crossref : NavRoute()
+
+    @Serializable
+    data object RemoteConfig : NavRoute()
 }

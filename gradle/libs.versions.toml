@@ -25,6 +25,8 @@ sqlite = "2.7.1"
 ksp = "2.3.12"
 googleServices = "4.5.0"
 firebaseDatabase = "2.7.0"
+firebaseKotlin = "2.7.0"
+desugarJdkLibs = "2.1.5"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -64,6 +66,8 @@ androidx-room3-runtime = { module = "androidx.room3:room3-runtime", version.ref 
 androidx-room3-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room3" }
 androidx-room3-sqlite-wrapper = { module = "androidx.room3:room3-sqlite-wrapper", version.ref = "room3" }
 firebase-database = { module = "dev.gitlive:firebase-database", version.ref = "firebaseDatabase" }
+firebase-config = { module = "dev.gitlive:firebase-config", version.ref = "firebaseKotlin" }
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
