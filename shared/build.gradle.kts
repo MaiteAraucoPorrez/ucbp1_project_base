@@ -11,6 +11,10 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
+    }
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -73,6 +77,7 @@ kotlin {
             implementation(libs.androidx.sqlite.bundled)
             implementation(libs.firebase.database)
             implementation(libs.firebase.config)
+            implementation(libs.firebase.firestore)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

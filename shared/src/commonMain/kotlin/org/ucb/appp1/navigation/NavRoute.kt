@@ -34,4 +34,7 @@ sealed class NavRoute {
 
     @Serializable
     data object RemoteConfig : NavRoute()
+
+    @Serializable
+    data object Announcements : NavRoute()
 }
