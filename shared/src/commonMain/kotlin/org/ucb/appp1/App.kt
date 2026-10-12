@@ -6,13 +6,15 @@ import org.ucb.appp1.navigation.AppNavHost
 import org.ucb.appp1.exchangerate.presentation.screen.ExchangeRateScreen
 import org.ucb.appp1.exchange.presentation.screen.ExchangeScreen
 import org.ucb.appp1.feature.announcements.presentation.screen.AnnouncementsScreen
+import org.ucb.appp1.feature.pushnotifications.presentation.screen.PushScreen
 import org.ucb.appp1.feature.remoteconfig.presentation.screen.RemoteConfigScreen
 
 
 @Composable
 fun App() {
     MaterialTheme {
-        AnnouncementsScreen()
+        PushScreen()
+        //AnnouncementsScreen()
         //RemoteConfigScreen()
         //ExchangeScreen()
         //ExchangeRateScreen()

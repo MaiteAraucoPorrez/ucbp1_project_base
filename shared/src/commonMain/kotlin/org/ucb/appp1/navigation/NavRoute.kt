@@ -37,4 +37,7 @@ sealed class NavRoute {
 
     @Serializable
     data object Announcements : NavRoute()
+
+    @Serializable
+    data object PushNotifications : NavRoute()
 }
