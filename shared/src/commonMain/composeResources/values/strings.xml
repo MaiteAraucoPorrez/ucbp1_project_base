@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">My App</string>
+    <string name="loc_title">Localization Demo</string>
+    <string name="loc_welcome">Welcome</string>
+    <string name="loc_description">This screen demonstrates multi-language support in Compose Multiplatform.</string>
+    <string name="loc_hint">Change device language in Settings to test different locales.</string>
+    <string name="btn_skip">Skip</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_finish">Finish</string>
+</resources>
