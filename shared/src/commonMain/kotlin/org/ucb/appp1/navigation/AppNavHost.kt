@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import org.ucb.appp1.feature.announcements.presentation.screen.AnnouncementsScreen
 import org.ucb.appp1.feature.catalog.presentation.screen.CatalogScreen
 import org.ucb.appp1.feature.crossref.presentation.screen.CrossrefScreen
 import org.ucb.appp1.feature.login.presentation.screen.LoginScreen
@@ -35,6 +36,10 @@ fun AppNavHost() {
 
         composable<NavRoute.RemoteConfig> {
             RemoteConfigScreen()
+        }
+
+        composable<NavRoute.Announcements> {
+            AnnouncementsScreen()
         }
 
         composable<NavRoute.Login> {
