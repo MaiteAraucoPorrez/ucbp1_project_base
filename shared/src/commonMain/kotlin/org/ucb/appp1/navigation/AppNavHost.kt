@@ -8,6 +8,7 @@ import androidx.navigation.toRoute
 import org.ucb.appp1.feature.announcements.presentation.screen.AnnouncementsScreen
 import org.ucb.appp1.feature.catalog.presentation.screen.CatalogScreen
 import org.ucb.appp1.feature.crossref.presentation.screen.CrossrefScreen
+import org.ucb.appp1.feature.localization.presentation.screen.LocalizationScreen
 import org.ucb.appp1.feature.login.presentation.screen.LoginScreen
 import org.ucb.appp1.feature.moviedetail.presentation.screen.MovieDetailScreen
 import org.ucb.appp1.feature.movielist.domain.vo.MovieId
@@ -45,6 +46,10 @@ fun AppNavHost() {
 
         composable<NavRoute.PushNotifications> {
             PushScreen()
+        }
+
+        composable<NavRoute.Localization> {
+            LocalizationScreen()
         }
 
         composable<NavRoute.Login> {

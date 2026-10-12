@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">Mon Application</string>
+    <string name="loc_title">Démonstration de Localisation</string>
+    <string name="loc_welcome">Bienvenue</string>
+    <string name="loc_description">Cet écran démontre la prise en charge multilingue dans Compose Multiplatform.</string>
+    <string name="loc_hint">Modifiez la langue de l\'appareil dans les Paramètres para tester.</string>
+    <string name="btn_skip">Passer</string>
+    <string name="btn_next">Suivant</string>
+    <string name="btn_finish">Terminer</string>
+</resources>

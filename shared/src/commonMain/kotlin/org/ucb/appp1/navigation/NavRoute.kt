@@ -40,4 +40,7 @@ sealed class NavRoute {
 
     @Serializable
     data object PushNotifications : NavRoute()
+
+    @Serializable
+    data object Localization : NavRoute()
 }

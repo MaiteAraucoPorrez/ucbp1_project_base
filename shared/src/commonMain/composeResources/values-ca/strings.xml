@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">La Meva Aplicació</string>
+    <string name="loc_title">Demostració de Localització</string>
+    <string name="loc_welcome">Benvingut</string>
+    <string name="loc_description">Aquesta pantalla demostra el suport multi-idioma a Compose Multiplatform.</string>
+    <string name="loc_hint">Canvia l\'idioma del teu dispositiu en Configuració per provar diferents opcions.</string>
+    <string name="btn_skip">Ometre</string>
+    <string name="btn_next">Següent</string>
+    <string name="btn_finish">Finalitzar</string>
+</resources>

@@ -100,3 +100,5 @@ dependencies {
 room3 {
     schemaDirectory("$projectDir/schemas")
 }
+
+apply(from = "loco.gradle.kts")
