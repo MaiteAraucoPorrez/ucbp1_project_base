@@ -23,6 +23,8 @@ import appp1.shared.generated.resources.loc_hint
 import appp1.shared.generated.resources.loc_title
 import appp1.shared.generated.resources.loc_welcome
 import org.jetbrains.compose.resources.stringResource
+import edu.ucb.ds.theme.MyProjectTheme
+import edu.ucb.ds.components.buttons.PrimaryButton
 
 /**
  * Pantalla de ejemplo con textos que vienen de Localise.biz.
@@ -31,6 +33,10 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun LocalizationScreen(modifier: Modifier = Modifier) {
+    MyProjectTheme {
+        PrimaryButton(text = "Entrar", onClick = { })
+        Text("Hola", color = MyProjectTheme.colors.primary)
+    }
     Column(
         modifier = modifier
             .fillMaxSize()

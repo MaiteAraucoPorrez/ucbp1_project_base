@@ -79,6 +79,7 @@ kotlin {
             implementation(libs.firebase.config)
             implementation(libs.firebase.firestore)
             implementation(libs.firebase.messaging)
+            implementation("edu.ucb.ds:shared:1.0.0-SNAPSHOT")
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
