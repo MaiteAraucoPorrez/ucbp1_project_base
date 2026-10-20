@@ -5,12 +5,19 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import org.ucb.appp1.di.initKoinAndroid
+import org.ucb.appp1.scheduler.LogScheduler
 
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initKoinAndroid(this)
         createNotificationChannel()
+
+        // Tarea en segundo plano (WorkManager): cada 15 minutos y solo con internet.
+        val logScheduler = LogScheduler(this)
+        logScheduler.schedulePeriodicalUpload()
+        // Para probar sin esperar 15 minutos, usa en su lugar:
+        //logScheduler.scheduleOneTimeUpload()
     }
 
     // Android 8+ necesita un canal para mostrar notificaciones.
