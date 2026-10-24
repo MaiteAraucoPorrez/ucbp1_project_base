@@ -15,10 +15,11 @@ import androidx.compose.ui.Modifier
 import org.ucb.appp1.exchange.presentation.screen.ExchangeScreen
 import org.ucb.appp1.feature.announcements.presentation.screen.AnnouncementsScreen
 import org.ucb.appp1.feature.localization.presentation.screen.LocalizationScreen
+import org.ucb.appp1.feature.logs.presentation.screen.LogsScreen
 import org.ucb.appp1.feature.pushnotifications.presentation.screen.PushScreen
 import org.ucb.appp1.feature.remoteconfig.presentation.screen.RemoteConfigScreen
 
-private val tabs = listOf("Dólar", "Config", "Avisos", "Push", "Idiomas")
+private val tabs = listOf("Dólar", "Config", "Avisos", "Push", "Idiomas", "gRPC")
 
 /** Pantalla con una pestaña por cada feature de Firebase / Localise. */
 @Composable
@@ -45,7 +46,8 @@ fun FeaturesHubScreen() {
                 1 -> RemoteConfigScreen()        // Remote Config
                 2 -> AnnouncementsScreen()       // Firestore en tiempo real
                 3 -> PushScreen()                // FCM: token, lista de tokens, deleteToken
-                else -> LocalizationScreen()     // Localise.biz
+                4 -> LocalizationScreen()        // Localise.biz
+                else -> LogsScreen()             // gRPC (Wire)
             }
         }
     }

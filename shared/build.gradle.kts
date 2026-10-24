@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room3)
+    alias(libs.plugins.wire)
 }
 
 kotlin {
@@ -81,6 +82,7 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(libs.firebase.messaging)
             implementation("edu.ucb.ds:shared:1.0.0-SNAPSHOT")
+            implementation(libs.wire.grpc.client)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -104,3 +106,12 @@ room3 {
 }
 
 apply(from = "loco.gradle.kts")
+
+wire {
+    sourcePath {
+        srcDir("src/commonMain/proto")
+    }
+    kotlin {
+        rpcRole = "client"
+    }
+}

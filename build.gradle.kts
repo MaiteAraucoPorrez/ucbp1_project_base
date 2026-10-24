@@ -10,4 +10,5 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.androidx.room3) apply false
     alias(libs.plugins.googleServices) apply false
+    alias(libs.plugins.wire) apply false
 }

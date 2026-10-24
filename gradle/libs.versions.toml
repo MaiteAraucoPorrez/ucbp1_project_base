@@ -27,8 +27,9 @@ googleServices = "4.5.0"
 firebaseDatabase = "2.7.0"
 firebaseKotlin = "2.7.0"
 desugarJdkLibs = "2.1.5"
-firebaseBom = "35.0.2"
-workRuntimeKtx = "2.11.0"
+firebaseBom = "35.1.0"
+workRuntimeKtx = "2.12.0"
+wire = "7.1.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -75,6 +76,7 @@ firebase-messaging = { module = "dev.gitlive:firebase-messaging", version.ref = 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging-android = { module = "com.google.firebase:firebase-messaging" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
+wire-grpc-client = { module = "com.squareup.wire:wire-grpc-client", version.ref = "wire" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -87,3 +89,4 @@ detekt = { id = "dev.detekt", version.ref = "detekt"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-room3 = { id = "androidx.room3", version.ref = "room3" }
 googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+wire = { id = "com.squareup.wire", version.ref = "wire" }
