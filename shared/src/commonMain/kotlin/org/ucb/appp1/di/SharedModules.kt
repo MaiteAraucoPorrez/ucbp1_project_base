@@ -9,5 +9,6 @@ fun sharedModules(): List<Module> = listOf(
     presentationModule,
     remoteConfigModule,
     announcementsModule,
-    pushNotificationsModule
+    pushNotificationsModule,
+    logsModule,
 )

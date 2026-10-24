@@ -43,4 +43,7 @@ sealed class NavRoute {
 
     @Serializable
     data object Localization : NavRoute()
+
+    @Serializable
+    data object Logs : NavRoute()
 }
