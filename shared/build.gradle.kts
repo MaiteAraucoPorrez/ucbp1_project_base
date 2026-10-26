@@ -16,6 +16,8 @@ plugins {
 kotlin {
     compilerOptions {
         freeCompilerArgs.add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
+        // Las clases expect/actual (AppDatabaseConstructor, LogScheduler) siguen en beta: quita el aviso.
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
     listOf(
