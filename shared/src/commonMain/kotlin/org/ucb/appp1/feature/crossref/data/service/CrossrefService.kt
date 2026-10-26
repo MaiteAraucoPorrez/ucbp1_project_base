@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import org.ucb.appp1.core.util.safeCall
 import org.ucb.appp1.feature.crossref.data.datasource.CrossrefRemoteDataSource
 import org.ucb.appp1.feature.crossref.data.dto.CrossrefDto
 import org.ucb.appp1.feature.crossref.data.mapper.toModel
@@ -17,15 +18,11 @@ class CrossrefService(
     private val client: HttpClient
 ) : CrossrefRemoteDataSource {
 
-    override suspend fun fetchData(): Result<List<CrossrefModel>> {
-        return try {
-            val response: CrossrefDto = client.get(CROSSREF_URL) {
-                parameter("query", DEFAULT_QUERY)
-                parameter("rows", DEFAULT_ROWS)
-            }.body()
-            Result.success(response.message.items.map { it.toModel() })
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    override suspend fun fetchData(): Result<List<CrossrefModel>> = safeCall {
+        val response: CrossrefDto = client.get(CROSSREF_URL) {
+            parameter("query", DEFAULT_QUERY)
+            parameter("rows", DEFAULT_ROWS)
+        }.body()
+        response.message.items.map { it.toModel() }
     }
 }

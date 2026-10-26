@@ -2,8 +2,8 @@ package org.ucb.appp1.feature.remoteconfig.data.datasource
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.remoteconfig.remoteConfig
-import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration.Companion.seconds
+import org.ucb.appp1.core.util.safeCall
 import org.ucb.appp1.feature.remoteconfig.data.dto.AppConfigDto
 
 /** Nombres de los parámetros que se crean en la consola de Firebase (Remote Config). */
@@ -25,51 +25,36 @@ class RemoteConfigDataSource {
 
     private var configured = false
 
-    suspend fun fetch(): Result<AppConfigDto> {
-        return try {
-            val config = Firebase.remoteConfig
+    suspend fun fetch(): Result<AppConfigDto> = safeCall {
+        val config = Firebase.remoteConfig
 
-            if (!configured) {
-                // 0 segundos = siempre pide los valores nuevos (útil para la demo).
-                // En producción usa un intervalo mayor (por ejemplo 12.hours) para no ser limitado.
-                config.settings { minimumFetchInterval = 0.seconds }
-                // Valores por defecto: se usan si no hay internet o el parámetro no existe en la consola.
-                config.setDefaults(
-                    RemoteConfigKeys.SUPPORT_PHONE to "70000000",
-                    RemoteConfigKeys.WEBSITE_URL to "https://www.ucb.edu.bo",
-                    RemoteConfigKeys.ONBOARDING to DEFAULT_ONBOARDING,
-                    RemoteConfigKeys.UPDATE_REQUIRED to false,
-                    RemoteConfigKeys.STORE_URL to "https://play.google.com/store",
-                    RemoteConfigKeys.PAYMENT_PROVIDER to "stripe"
-                )
-                configured = true
-            }
-
-            // Si falla la descarga (sin internet) seguimos con los valores guardados / por defecto.
-            val fromServer = try {
-                config.fetchAndActivate()
-                true
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                false
-            }
-
-            Result.success(
-                AppConfigDto(
-                    supportPhone = config.getValue(RemoteConfigKeys.SUPPORT_PHONE).asString(),
-                    websiteUrl = config.getValue(RemoteConfigKeys.WEBSITE_URL).asString(),
-                    onboardingJson = config.getValue(RemoteConfigKeys.ONBOARDING).asString(),
-                    updateRequired = config.getValue(RemoteConfigKeys.UPDATE_REQUIRED).asBoolean(),
-                    storeUrl = config.getValue(RemoteConfigKeys.STORE_URL).asString(),
-                    paymentProvider = config.getValue(RemoteConfigKeys.PAYMENT_PROVIDER).asString(),
-                    fromServer = fromServer
-                )
+        if (!configured) {
+            // 0 segundos = siempre pide los valores nuevos (útil para la demo).
+            // En producción usa un intervalo mayor (por ejemplo 12.hours) para no ser limitado.
+            config.settings { minimumFetchInterval = 0.seconds }
+            // Valores por defecto: se usan si no hay internet o el parámetro no existe en la consola.
+            config.setDefaults(
+                RemoteConfigKeys.SUPPORT_PHONE to "70000000",
+                RemoteConfigKeys.WEBSITE_URL to "https://www.ucb.edu.bo",
+                RemoteConfigKeys.ONBOARDING to DEFAULT_ONBOARDING,
+                RemoteConfigKeys.UPDATE_REQUIRED to false,
+                RemoteConfigKeys.STORE_URL to "https://play.google.com/store",
+                RemoteConfigKeys.PAYMENT_PROVIDER to "stripe"
             )
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            Result.failure(e)
+            configured = true
         }
+
+        // Si falla la descarga (sin internet) seguimos con los valores guardados / por defecto.
+        val fromServer = safeCall { config.fetchAndActivate() }.isSuccess
+
+        AppConfigDto(
+            supportPhone = config.getValue(RemoteConfigKeys.SUPPORT_PHONE).asString(),
+            websiteUrl = config.getValue(RemoteConfigKeys.WEBSITE_URL).asString(),
+            onboardingJson = config.getValue(RemoteConfigKeys.ONBOARDING).asString(),
+            updateRequired = config.getValue(RemoteConfigKeys.UPDATE_REQUIRED).asBoolean(),
+            storeUrl = config.getValue(RemoteConfigKeys.STORE_URL).asString(),
+            paymentProvider = config.getValue(RemoteConfigKeys.PAYMENT_PROVIDER).asString(),
+            fromServer = fromServer
+        )
     }
 }

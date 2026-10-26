@@ -1,9 +1,9 @@
 package org.ucb.appp1.feature.pushnotifications.data.repository
 
-import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.ucb.appp1.core.util.currentTimeMillis
+import org.ucb.appp1.core.util.safeCall
 import org.ucb.appp1.feature.pushnotifications.data.datasource.PushTokenDataSource
 import org.ucb.appp1.feature.pushnotifications.data.dto.DeviceTokenDto
 import org.ucb.appp1.feature.pushnotifications.data.mapper.toDomain
@@ -46,16 +46,6 @@ class PushTokenRepositoryImpl(
 
     override fun observeTokens(): Flow<List<DeviceToken>> =
         dataSource.observe().map { list -> list.map { it.toDomain() } }
-
-    private suspend fun <T> safeCall(block: suspend () -> T): Result<T> {
-        return try {
-            Result.success(block())
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
 
     private companion object {
         /** Identificador de la app (pizarra: "appid"). Es el mismo applicationId de Android. */

@@ -19,7 +19,8 @@ class RegisterViewModel(
     fun onFullNameChanged(value: String) = _state.update { it.copy(fullName = value, errorMessage = null) }
     fun onEmailChanged(value: String) = _state.update { it.copy(email = value, errorMessage = null) }
     fun onPasswordChanged(value: String) = _state.update { it.copy(password = value, errorMessage = null) }
-    fun onConfirmPasswordChanged(value: String) = _state.update { it.copy(confirmPassword = value, errorMessage = null) }
+    fun onConfirmPasswordChanged(value: String) =
+        _state.update { it.copy(confirmPassword = value, errorMessage = null) }
 
     fun onRegisterClicked() {
         val current = _state.value

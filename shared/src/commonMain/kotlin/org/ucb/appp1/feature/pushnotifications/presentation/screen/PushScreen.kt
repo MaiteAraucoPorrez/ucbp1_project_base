@@ -77,7 +77,10 @@ fun PushScreen(
         state.tokens.forEach { device ->
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text("${device.platform} · ${device.segment} · ${device.appId}", style = MaterialTheme.typography.labelLarge)
+                    Text(
+                        "${device.platform} · ${device.segment} · ${device.appId}",
+                        style = MaterialTheme.typography.labelLarge
+                    )
                     Text(device.token.take(40) + "…", style = MaterialTheme.typography.bodySmall)
                 }
             }
