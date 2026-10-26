@@ -32,9 +32,10 @@ private fun parseOnboarding(raw: String): List<OnboardingItem> {
                 url = dto.url?.takeIf { it.isNotBlank() }
             )
         }
-    } catch (e: SerializationException) {
+    } catch (ignored: SerializationException) {
+        // JSON mal formado en Remote Config: se muestra sin onboarding en vez de fallar.
         emptyList()
-    } catch (e: IllegalArgumentException) {
+    } catch (ignored: IllegalArgumentException) {
         emptyList()
     }
 }

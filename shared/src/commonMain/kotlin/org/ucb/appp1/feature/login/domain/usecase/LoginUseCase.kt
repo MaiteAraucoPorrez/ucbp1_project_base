@@ -10,9 +10,11 @@ class LoginUseCase(
     private val repository: AuthRepository,
     private val session: SessionRepository
 ) {
-    suspend operator fun invoke(email: Email, password: Password): Result<UserModel> {
-        if (!email.isValid()) return Result.failure(IllegalArgumentException("Correo inválido"))
-        if (!password.isValid()) return Result.failure(IllegalArgumentException("La contraseña debe tener 6+ caracteres"))
-        return repository.login(email, password).onSuccess { session.setCurrentUser(it) }
+    suspend operator fun invoke(email: Email, password: Password): Result<UserModel> = when {
+        !email.isValid() -> Result.failure(IllegalArgumentException("Correo inválido"))
+        !password.isValid() -> Result.failure(
+            IllegalArgumentException("La contraseña debe tener ${Password.MIN_LENGTH}+ caracteres")
+        )
+        else -> repository.login(email, password).onSuccess { session.setCurrentUser(it) }
     }
 }

@@ -21,7 +21,8 @@ class MovieRepositoryImpl : MovieRepository {
         Movie(
             id = MovieId("3"), title = "Interstellar", posterPath = PosterPath(""),
             genres = listOf("Ciencia Ficción", "Drama"), rating = 4.9, isFavorite = true,
-            synopsis = "Un grupo de astronautas viaja por un agujero de gusano buscando un nuevo hogar para la humanidad."
+            synopsis = "Un grupo de astronautas viaja por un agujero de gusano " +
+                "buscando un nuevo hogar para la humanidad."
         )
     )
 

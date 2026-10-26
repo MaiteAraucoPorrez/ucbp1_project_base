@@ -10,11 +10,11 @@ class UpdateProfileUseCase(
 ) {
     suspend operator fun invoke(fullName: String): Result<UserModel> {
         val currentUser = session.getCurrentUser()
-            ?: return Result.failure(IllegalStateException("No hay una sesión activa"))
-        if (fullName.isBlank()) {
-            return Result.failure(IllegalArgumentException("El nombre no puede estar vacío"))
+        return when {
+            currentUser == null -> Result.failure(IllegalStateException("No hay una sesión activa"))
+            fullName.isBlank() -> Result.failure(IllegalArgumentException("El nombre no puede estar vacío"))
+            else -> profileRepository.updateFullName(currentUser.email, fullName)
+                .onSuccess { session.setCurrentUser(it) }
         }
-        return profileRepository.updateFullName(currentUser.email, fullName)
-            .onSuccess { session.setCurrentUser(it) }
     }
 }

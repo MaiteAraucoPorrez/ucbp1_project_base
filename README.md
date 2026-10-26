@@ -12,6 +12,18 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
     Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
     folder is the appropriate location.
 
+### API keys (local.properties)
+
+Las claves no están en el código. Agrégalas en `local.properties` (no se sube a Git):
+
+```properties
+tmdb.apiKey=TU_API_KEY_DE_TMDB   # catálogo de películas (https://www.themoviedb.org/settings/api)
+loco.apiKey=TU_EXPORT_KEY_DE_LOCO # solo para ./gradlew :shared:downloadLocoStrings
+```
+
+También se pueden pasar como variables de entorno `TMDB_API_KEY` y `LOCO_API_KEY`.
+Sin `tmdb.apiKey` la app compila igual, pero el catálogo muestra un error al cargar.
+
 ### Running the apps
 
 Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
