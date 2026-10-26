@@ -12,20 +12,22 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
-import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationUiState
+import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationEffects
+import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationEvents
 import org.ucb.appp1.userinformation.presentation.viewmodel.UserInformationViewModel
 
 /**
@@ -36,14 +38,28 @@ fun UserInformationScreen(
     onNavigateBack: () -> Unit,
     viewModel: UserInformationViewModel = koinViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    var username by remember { mutableStateOf("octocat") }
+    val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.effects.collect { effect ->
+            when (effect) {
+                is UserInformationEffects.NavigateBack -> onNavigateBack()
+                is UserInformationEffects.ShowToast -> snackbarHostState.showSnackbar(effect.message)
+            }
+        }
+    }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text("Buscar en GitHub") },
-                navigationIcon = { TextButton(onClick = onNavigateBack) { Text("← Volver") } }
+                navigationIcon = {
+                    TextButton(onClick = { viewModel.emitEvent(UserInformationEvents.OnBackClicked) }) {
+                        Text("← Volver")
+                    }
+                }
             )
         }
     ) { padding ->
@@ -55,8 +71,8 @@ fun UserInformationScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
+                value = state.username,
+                onValueChange = { viewModel.emitEvent(UserInformationEvents.OnUsernameChanged(it)) },
                 label = { Text("Usuario de GitHub") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -64,7 +80,8 @@ fun UserInformationScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             Button(
-                onClick = { viewModel.fetchUser(username) },
+                onClick = { viewModel.emitEvent(UserInformationEvents.OnSearchClicked) },
+                enabled = !state.isLoading,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Buscar Usuario")
@@ -72,31 +89,33 @@ fun UserInformationScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            when (val state = uiState) {
-                is UserInformationUiState.Idle -> Text("Ingresa un usuario y presiona Buscar")
-                is UserInformationUiState.Loading -> CircularProgressIndicator()
-                is UserInformationUiState.Success -> Card(modifier = Modifier.fillMaxWidth()) {
+            val userInfo = state.userInfo
+            val errorMessage = state.errorMessage
+            when {
+                state.isLoading -> CircularProgressIndicator()
+                userInfo != null -> Card(modifier = Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp)) {
                         Text(
-                            "Email: ${state.userInfo.email.ifEmpty { "No especificado" }}",
+                            "Email: ${userInfo.email.ifEmpty { "No especificado" }}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            "Compañía: ${state.userInfo.company.ifEmpty { "No especificado" }}",
+                            "Compañía: ${userInfo.company.ifEmpty { "No especificado" }}",
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            "Avatar URL: ${state.userInfo.avatarUrl.ifEmpty { "No disponible" }}",
+                            "Avatar URL: ${userInfo.avatarUrl.ifEmpty { "No disponible" }}",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }
-                is UserInformationUiState.Error -> Text(
-                    "Error: ${state.message}",
+                errorMessage != null -> Text(
+                    "Error: $errorMessage",
                     color = MaterialTheme.colorScheme.error
                 )
+                else -> Text("Ingresa un usuario y presiona Buscar")
             }
         }
     }
