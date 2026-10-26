@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room3)
     alias(libs.plugins.wire)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -114,4 +115,17 @@ wire {
     kotlin {
         rpcRole = "client"
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    ignoreFailures = false
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    source.setFrom(
+        "src/commonMain/kotlin",
+        "src/androidMain/kotlin",
+        "src/iosMain/kotlin",
+        "src/commonTest/kotlin",
+    )
 }

@@ -11,4 +11,5 @@ plugins {
     alias(libs.plugins.androidx.room3) apply false
     alias(libs.plugins.googleServices) apply false
     alias(libs.plugins.wire) apply false
+    alias(libs.plugins.detekt) apply false
 }
