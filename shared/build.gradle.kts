@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -128,4 +129,56 @@ detekt {
         "src/iosMain/kotlin",
         "src/commonTest/kotlin",
     )
+}
+
+// =====================================================================
+// API keys fuera del código. Se leen de:
+//   1) local.properties  ->  tmdb.apiKey=TU_API_KEY      (este archivo NO se sube a Git)
+//   2) variable de entorno TMDB_API_KEY
+// y se genera build/generated/secrets/.../Secrets.kt, que se compila junto con commonMain.
+// =====================================================================
+abstract class GenerateSecrets : DefaultTask() {
+
+    @get:Input
+    abstract val tmdbApiKey: Property<String>
+
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun generate() {
+        if (tmdbApiKey.get().isBlank()) {
+            logger.warn("tmdb.apiKey no está en local.properties ni en TMDB_API_KEY: el catálogo no cargará.")
+        }
+        val file = outputDir.file("org/ucb/appp1/core/config/Secrets.kt").get().asFile
+        file.parentFile.mkdirs()
+        file.writeText(
+            """
+            |package org.ucb.appp1.core.config
+            |
+            |// Archivo generado por la tarea generateSecrets. No editar.
+            |internal object Secrets {
+            |    const val TMDB_API_KEY = "${tmdbApiKey.get()}"
+            |}
+            |""".trimMargin()
+        )
+    }
+}
+
+val localProperties = providers
+    .fileContents(rootProject.layout.projectDirectory.file("local.properties"))
+    .asText
+    .map { text -> Properties().apply { load(text.reader()) } }
+
+val generateSecrets = tasks.register<GenerateSecrets>("generateSecrets") {
+    tmdbApiKey.set(
+        localProperties.map { it.getProperty("tmdb.apiKey") }
+            .orElse(providers.environmentVariable("TMDB_API_KEY"))
+            .orElse("")
+    )
+    outputDir.set(layout.buildDirectory.dir("generated/secrets/kotlin"))
+}
+
+kotlin.sourceSets.commonMain {
+    kotlin.srcDir(generateSecrets.map { it.outputDir })
 }
