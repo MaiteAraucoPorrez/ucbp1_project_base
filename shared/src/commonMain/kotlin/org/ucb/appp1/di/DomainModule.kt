@@ -14,6 +14,7 @@ import org.ucb.appp1.feature.userstate.domain.usecase.GetFavoriteMoviesUseCase
 import org.ucb.appp1.feature.userstate.domain.usecase.LogoutUseCase
 import org.ucb.appp1.feature.userstate.domain.usecase.UpdateProfileUseCase
 import org.ucb.appp1.exchange.domain.usecase.ObserveExchangeUseCase
+import org.ucb.appp1.userinformation.domain.usecase.FindAliasUseCase
 
 val domainModule = module {
     singleOf(::LoginUseCase)
@@ -28,4 +29,5 @@ val domainModule = module {
     singleOf(::GetCatalogUseCase)
     singleOf(::GetCrossrefUseCase)
     singleOf(::ObserveExchangeUseCase)
+    singleOf(::FindAliasUseCase)
 }
